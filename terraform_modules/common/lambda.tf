@@ -31,7 +31,7 @@ module "lambda_error_processor" {
   identifier = "error_processor"
   handler    = "handlers/error_processor/error_processor.handler"
   role_arn   = aws_iam_role.lambda_error_processor.arn
-  layers     = [var.layer_arn_base]
+  layers     = ["arn:aws:lambda:ap-northeast-1:043309354008:layer:LuciferousPublicLayerAwsCloudwatchLogsUrlPython313:1"]
 
   environment_variables = {
     SYSTEM_NAME    = var.system_name

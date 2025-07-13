@@ -31,8 +31,8 @@ fmt-terraform-module-lambda-function-basic:
 	terraform fmt
 
 fmt-python:
-	poetry run ruff check --select I --fix src/ tests/
-	poetry run ruff format src/ tests/
+	uv run ruff check --select I --fix src/ tests/
+	uv run ruff format src/ tests/
 
 lint: \
 	lint-terraform \
@@ -65,14 +65,14 @@ lint-terraform-module-lambda-function-basic:
 	terraform fmt -check
 
 lint-python:
-	poetry run ruff check src/ tests/
+	uv run ruff check src/ tests/
 
 test-unit:
 	AWS_ACCESS_KEY_ID=dummy \
 	AWS_SECRET_ACCESS_KEY=dummy \
 	AWS_DEFAULT_REGION=ap-northeast-1 \
 	PYTHONPATH=src \
-	poetry run python -m pytest -vv tests/unit
+	uv run python -m pytest -vv tests/unit
 
 compose-up:
 	docker compose up -d

@@ -13,8 +13,8 @@ resource "aws_lambda_function" "function" {
   publish                        = true
 
   layers = concat(var.layers, [
-    # Powertools for AWS Lambda (Python) [arm64] with extra dependencies version 3.1.0
-    "arn:aws:lambda:${var.region}:017000801446:layer:AWSLambdaPowertoolsPythonV3-python312-arm64:2"
+    # aws-lambda-powertools[all]==3.15.1
+    "arn:aws:lambda:ap-northeast-1:017000801446:layer:AWSLambdaPowertoolsPythonV3-python313-arm64:18"
   ])
 
   environment {

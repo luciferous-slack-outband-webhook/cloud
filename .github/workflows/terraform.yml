@@ -17,7 +17,6 @@ permissions:
 env:
   TF_VAR_SYSTEM_NAME: ${{ vars.SYSTEM_NAME }}
   TF_VAR_REGION: ${{ vars.REGION }}
-  TF_VAR_LAYER_ARN_BASE: ${{ vars.LAYER_ARN_BASE }}
   TF_VAR_SLACK_INCOMING_WEBHOOK_ERROR_NOTIFIER_01: ${{ secrets.SLACK_INCOMING_WEBHOOK_ERROR_NOTIFIER_01 }}
 
 jobs:
@@ -39,7 +38,3 @@ jobs:
       - name: terraform apply
         run: terraform apply -auto-approve
         if: ${{ github.ref_type == 'tag' }}
-      - name: terraform output
-        run: terraform output
-        if: ${{ github.ref_type == 'tag' }}
-

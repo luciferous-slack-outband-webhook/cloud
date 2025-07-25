@@ -1,0 +1,32 @@
+{
+  "token": "upJ7lLrnUwelIYcJWZJuKCFs",
+  "team_id": "T03542XV5EG",
+  "context_team_id": "T03542XV5EG",
+  "context_enterprise_id": null,
+  "api_app_id": "A090UPSCQAD",
+  "event": {
+    "subtype": "channel_join",
+    "user": "U090HNHCYP4",
+    "text": "<@U090HNHCYP4>さんがチャンネルに参加しました",
+    "inviter": "U034V3KR770",
+    "type": "message",
+    "ts": "1749363008.535609",
+    "channel": "C090HNA5CJW",
+    "event_ts": "1749363008.535609",
+    "channel_type": "channel"
+  },
+  "type": "event_callback",
+  "event_id": "Ev090EM7U7E1",
+  "event_time": 1749363008,
+  "authorizations": [
+    {
+      "enterprise_id": null,
+      "team_id": "T03542XV5EG",
+      "user_id": "U090HNHCYP4",
+      "is_bot": true,
+      "is_enterprise_install": false
+    }
+  ],
+  "is_ext_shared_channel": false,
+  "event_context": "4-eyJldCI6Im1lc3NhZ2UiLCJ0aWQiOiJUMDM1NDJYVjVFRyIsImFpZCI6IkEwOTBVUFNDUUFEIiwiY2lkIjoiQzA5MEhOQTVDSlcifQ"
+}

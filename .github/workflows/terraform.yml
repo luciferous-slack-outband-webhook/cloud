@@ -18,6 +18,9 @@ env:
   TF_VAR_SYSTEM_NAME: ${{ vars.SYSTEM_NAME }}
   TF_VAR_REGION: ${{ vars.REGION }}
   TF_VAR_SLACK_INCOMING_WEBHOOK_ERROR_NOTIFIER_01: ${{ secrets.SLACK_INCOMING_WEBHOOK_ERROR_NOTIFIER_01 }}
+  BUCKEND_S3_BUCKET: ${{ secrets.BACKEND_S3_BUCKET }}
+  BACKEND_S3_KEY: ${{ vars.BACKEND_S3_KEY }}
+  BACKEND_REGION: ${{ vars.REGION }}
 
 jobs:
   terraform:
@@ -33,7 +36,11 @@ jobs:
         with:
           role-to-assume: ${{ secrets.ROLE_ARN_GITHUB_ACTION }}
           aws-region: ${{ vars.REGION }}
-      - run: terraform init
+      - run: |
+          terraform init \
+            -backend-config="bucket=$BUCKEND_S3_BUCKET" \
+            -backend-config="key=$BACKEND_S3_KEY" \
+            -backend-config="region=$BACKEND_REGION"
       - name: terraform plan
         run: terraform plan
         if: ${{ github.ref_type == 'branch' }}

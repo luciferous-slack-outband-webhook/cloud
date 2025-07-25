@@ -37,7 +37,11 @@ jobs:
         with:
           role-to-assume: ${{ secrets.ROLE_ARN_GITHUB_ACTION }}
           aws-region: ${{ vars.REGION }}
-      - run: make terraform-init
+      - run: |
+          terraform init \
+            -backend-config="bucket=$BACKEND_S3_BUCKET" \
+            -backend-config="key=$BACKEND_S3_KEY" \
+            -backend-config="region=$BACKEND_REGION"
       - name: terraform plan
         run: terraform plan
         if: ${{ github.ref_type == 'branch' }}

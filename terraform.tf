@@ -11,6 +11,12 @@ terraform {
       version = "~> 5.72"
     }
   }
+
+  backend "s3" {
+    bucket         = null
+    key            = null
+    region         = null
+  }
 }
 
 # ================================================================

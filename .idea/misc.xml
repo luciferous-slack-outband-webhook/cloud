@@ -3,9 +3,12 @@
   <component name="Black">
     <option name="sdkName" value="pyenv global" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="pyenv global" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="uv (cloud)" project-jdk-type="Python SDK" />
   <component name="PyVirtualEnvTerminalCustomizer">
     <option name="virtualEnvActivate" value="false" />
+  </component>
+  <component name="PythonCompatibilityInspectionAdvertiser">
+    <option name="version" value="3" />
   </component>
   <component name="SshConsoleOptionsProvider">
     <option name="myEncoding" value="UTF-8" />

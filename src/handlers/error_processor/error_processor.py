@@ -15,14 +15,13 @@ from aws_lambda_powertools.utilities.data_classes.cloud_watch_logs_event import 
     CloudWatchLogsEvent,
     CloudWatchLogsLogEvent,
 )
+from pydantic_settings import BaseSettings
 
 from utils.aws import create_client
-from utils.dataclasses import load_environments
 from utils.logger import create_logger, logging_function, logging_handler
 
 
-@dataclass(frozen=True)
-class EnvironmentVariables:
+class EnvironmentVariables(BaseSettings):
     event_bus_name: str
     aws_default_region: str
     system_name: str
@@ -52,7 +51,7 @@ def main(
     event: CloudWatchLogsEvent,
     client_events=create_client("events"),
 ):
-    env = load_environments(class_dataclass=EnvironmentVariables)
+    env = EnvironmentVariables()
     decompressed_log = event.parse_logs_data()
     messages = [
         create_slack_payload(

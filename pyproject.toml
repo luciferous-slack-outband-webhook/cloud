@@ -13,7 +13,7 @@ dev = [
     # arn:aws:lambda:ap-northeast-1:017000801446:layer:AWSLambdaPowertoolsPythonV3-python313-arm64:18
     "aws-lambda-powertools[all]==3.15.1",
     "boto3>=1.38.41",
-    "boto3-stubs[dynamodb]>=1.38.41",
+    "boto3-stubs[dynamodb,events]>=1.38.41",
     "pytest>=8.4.1",
     "ruff>=0.12.0",
 ]

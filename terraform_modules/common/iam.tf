@@ -73,6 +73,69 @@ resource "aws_iam_policy" "event_bridge_invoke_api_destination" {
 }
 
 # ================================================================
+# Policy DynamoDB Query for Lambda Function URLs
+# ================================================================
+
+data "aws_iam_policy_document" "policy_dynamodb_query_lambda_function_urls" {
+  policy_id = "policy_dynamodb_query_lambda_function_urls"
+  statement {
+    sid    = "AllowDynamoDbQuery"
+    effect = local.iam.effect.allow
+    actions = [
+      "dynamodb:Query"
+    ]
+    resources = [
+      aws_dynamodb_table.slack_outband_webhook_mapping.arn,
+      "${aws_dynamodb_table.slack_outband_webhook_mapping.arn}/index/*"
+    ]
+  }
+}
+
+resource "aws_iam_policy" "dynamodb_query_lambda_function_urls" {
+  policy = data.aws_iam_policy_document.policy_dynamodb_query_lambda_function_urls.json
+}
+
+# ================================================================
+# Policy SSM GetParameters for Lambda Function URLs
+# ================================================================
+
+data "aws_iam_policy_document" "policy_ssm_get_parameters_lambda_function_urls" {
+  policy_id = "policy_ssm_get_parameters_lambda_function_urls"
+  statement {
+    sid    = "AllowSsmGetParameters"
+    effect = local.iam.effect.allow
+    actions = [
+      "ssm:GetParameters"
+    ]
+    resources = ["*"]
+  }
+}
+
+resource "aws_iam_policy" "ssm_get_parameters_lambda_function_urls" {
+  policy = data.aws_iam_policy_document.policy_ssm_get_parameters_lambda_function_urls.json
+}
+
+# ================================================================
+# Policy KMS Decrypt for Lambda Function URLs
+# ================================================================
+
+data "aws_iam_policy_document" "policy_kms_decrypt_lambda_function_urls" {
+  policy_id = "policy_kms_decrypt_lambda_function_urls"
+  statement {
+    sid    = "AllowKmsDecrypt"
+    effect = local.iam.effect.allow
+    actions = [
+      "kms:Decrypt"
+    ]
+    resources = ["*"]
+  }
+}
+
+resource "aws_iam_policy" "kms_decrypt_lambda_function_urls" {
+  policy = data.aws_iam_policy_document.policy_kms_decrypt_lambda_function_urls.json
+}
+
+# ================================================================
 # Role Lambda Error Processor
 # ================================================================
 
@@ -87,6 +150,25 @@ resource "aws_iam_role_policy_attachment" "lambda_error_processor" {
   }
   policy_arn = each.value
   role       = aws_iam_role.lambda_error_processor.name
+}
+
+# ================================================================
+# Role Lambda Function URLs
+# ================================================================
+
+resource "aws_iam_role" "lambda_function_urls" {
+  assume_role_policy = data.aws_iam_policy_document.assume_role_policy_lambda.json
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_function_urls" {
+  for_each = {
+    a = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+    b = aws_iam_policy.dynamodb_query_lambda_function_urls.arn
+    c = aws_iam_policy.ssm_get_parameters_lambda_function_urls.arn
+    d = aws_iam_policy.kms_decrypt_lambda_function_urls.arn
+  }
+  policy_arn = each.value
+  role       = aws_iam_role.lambda_function_urls.name
 }
 
 # ================================================================

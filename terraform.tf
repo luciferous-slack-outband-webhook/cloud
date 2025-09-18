@@ -13,9 +13,9 @@ terraform {
   }
 
   backend "s3" {
-    bucket         = null
-    key            = null
-    region         = null
+    bucket = null
+    key    = null
+    region = null
   }
 }
 

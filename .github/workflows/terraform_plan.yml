@@ -1,5 +1,5 @@
 on:
-  push:
+  pull_request: 
     paths-ignore:
       - "**/*.md"
       - ".vscode/**"
@@ -7,8 +7,6 @@ on:
       - ".gitignore"
     branches:
       - "master"
-    tags:
-      - "v*"
 
 permissions:
   id-token: write
@@ -39,8 +37,5 @@ jobs:
           BACKEND_S3_BUCKET: ${{ secrets.TERRAFORM_BACKEND_S3_BUCKET }}
           BACKEND_S3_KEY: ${{ vars.TERRAFORM_BACKEND_S3_KEY }}
           BACKEND_REGION: ${{ vars.REGION }}
-      - name: terraform apply
-        run: terraform apply -auto-approve
-      - name: terraform output
-        run: terraform output
-
+      - name: terraform plan
+        run: terraform plan

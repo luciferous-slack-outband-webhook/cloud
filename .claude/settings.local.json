@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /Users/yuta/space/projects/luciferous-slack-outband-webhook/00_repos/cloud -not -path */.* -not -path */.venv/* -not -path */.idea/* -type f)"
+    ]
+  }
+}

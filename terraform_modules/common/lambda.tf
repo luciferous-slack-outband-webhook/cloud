@@ -45,3 +45,39 @@ resource "aws_lambda_permission" "error_processor" {
   function_name = module.lambda_error_processor.function_arn
   principal     = "logs.amazonaws.com"
 }
+
+# ================================================================
+# Lambda Subscription to Outband
+# ================================================================
+
+module "lambda_subscription_to_outband" {
+  source = "../lambda_function"
+
+  identifier = "subscription_to_outband"
+  handler    = "handlers/subscription_to_outband/subscription_to_outband.handler"
+  role_arn   = aws_iam_role.subscription_to_outband.arn
+  runtime    = "python3.14"
+
+  s3_bucket_deploy_package = aws_s3_object.lambda_deploy_package.bucket
+  s3_key_deploy_package    = aws_s3_object.lambda_deploy_package.key
+  source_code_hash         = data.archive_file.lambda_deploy_package.output_base64sha256
+  system_name              = var.system_name
+  region                   = var.region
+
+  subscription_destination_lambda_arn = module.lambda_error_processor.function_arn
+}
+
+resource "aws_lambda_function_url" "subscription_to_outband" {
+  authorization_type = "NONE"
+  function_name      = module.lambda_subscription_to_outband.function_name
+  qualifier          = module.lambda_subscription_to_outband.function_alias_name
+}
+
+resource "aws_lambda_permission" "subscription_to_outband_url" {
+  statement_id           = "FunctionUrlAllowPublicAccessForUrl"
+  action                 = "lambda:InvokeFunctionUrl"
+  function_name          = module.lambda_subscription_to_outband.function_name
+  qualifier              = module.lambda_subscription_to_outband.function_alias_name
+  principal              = "*"
+  function_url_auth_type = "NONE"
+}

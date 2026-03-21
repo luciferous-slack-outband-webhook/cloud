@@ -1,3 +1,11 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "5.99.1"
+    }
+  }
+}
 locals {
   iam = {
     effect = {
@@ -103,4 +111,20 @@ resource "aws_iam_role_policy_attachment" "event_bridge_invoke_api_destination" 
   }
   policy_arn = each.value
   role       = aws_iam_role.event_bridge_invoke_api_destination.name
+}
+
+# ================================================================
+# Role Lambda Subscription To Outband
+# ================================================================
+
+resource "aws_iam_role" "subscription_to_outband" {
+  assume_role_policy = data.aws_iam_policy_document.assume_role_policy_lambda.json
+}
+
+resource "aws_iam_role_policy_attachment" "subscription_to_outband" {
+  for_each = {
+    a = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+  }
+  policy_arn = each.value
+  role       = aws_iam_role.subscription_to_outband.name
 }

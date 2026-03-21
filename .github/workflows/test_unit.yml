@@ -1,0 +1,16 @@
+on:
+  push:
+    branches:
+
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: .python-version
+      - uses: astral-sh/setup-uv@v7
+      - run: uv sync --all-groups --all-extras
+      - run: make compose-up
+      - run: make test-unit

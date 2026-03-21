@@ -1,0 +1,38 @@
+[project]
+name = "template-lambda-by-terraform"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "aws-cloudwatch-logs-url==1.0.3",
+    "black>=26.3.1",
+    "boto3==1.42.69",
+    "boto3-stubs[events]==1.42.69",
+    "freezegun>=1.5.5",
+    "isort>=8.0.1",
+    "pytest>=9.0.2",
+    "pytest-env>=1.6.0",
+]
+powertools = [
+    # arn:aws:lambda:ap-northeast-1:017000801446:layer:AWSLambdaPowertoolsPythonV3-python314-arm64:29
+    "aws-lambda-powertools[all]==3.25.0",
+]
+
+[tool.isort]
+profile = "black"
+
+[tool.pytest.ini_options]
+pythonpath = "src"
+addopts = ["--import-mode=importlib"]
+filterwarnings = [
+    "ignore::DeprecationWarning:botocore.*"
+]
+
+[tool.pytest_env]
+AWS_ACCESS_KEY_ID = "dummy"
+AWS_SECRET_ACCESS_KEY = "dummy"
+AWS_DEFAULT_REGION = "ap-northeast-1"

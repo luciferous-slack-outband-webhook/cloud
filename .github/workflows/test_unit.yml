@@ -1,6 +1,12 @@
 on:
-  push:
+  pull_request:
+    paths-ignore:
+      - "**/*.md"
+      - ".vscode/**"
+      - ".idea/**"
+      - ".gitignore"
     branches:
+      - master
 
 jobs:
   test:

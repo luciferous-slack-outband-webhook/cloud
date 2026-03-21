@@ -17,7 +17,6 @@ permissions:
 env:
   TF_VAR_SYSTEM_NAME: ${{ vars.SYSTEM_NAME }}
   TF_VAR_REGION: ${{ vars.REGION }}
-  TF_VAR_LAYER_ARN_BASE: ${{ vars.LAYER_ARN_BASE }}
   TF_VAR_SLACK_INCOMING_WEBHOOK_ERROR_NOTIFIER_01: ${{ secrets.SLACK_INCOMING_WEBHOOK_ERROR_NOTIFIER_01 }}
 
 jobs:
@@ -35,7 +34,11 @@ jobs:
         with:
           role-to-assume: ${{ secrets.ROLE_ARN_GITHUB_ACTION }}
           aws-region: ${{ vars.REGION }}
-      - run: terraform init
+      - run: make terraform-init
+        env:
+          BACKEND_S3_BUCKET: ${{ secrets.TERRAFORM_BACKEND_S3_BUCKET }}
+          BACKEND_S3_KEY: ${{ vars.TERRAFORM_BACKEND_S3_KEY }}
+          BACKEND_REGION: ${{ vars.REGION }}
       - name: terraform plan
         run: terraform plan
         if: ${{ github.ref_type == 'branch' }}

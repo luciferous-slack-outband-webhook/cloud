@@ -78,6 +78,12 @@ compose-up:
 compose-down:
 	docker compose down
 
+terraform-init:
+	terraform init \
+		-backend-config="bucket=$$BACKEND_S3_BUCKET" \
+		-backend-config="key=$$BACKEND_S3_KEY" \
+		-backend-config="region=$$BACKEND_REGION"
+
 .PHONY: \
 	format \
 	fmt-terraform \
@@ -91,4 +97,5 @@ compose-down:
 	lint-python \
 	test-unit \
 	compose-up \
-	compose-down
+	compose-down \
+	terraform-init

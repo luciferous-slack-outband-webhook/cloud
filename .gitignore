@@ -219,3 +219,4 @@ cython_debug/
 /tmp/
 lambda_deploy_package.zip
 /.claude/
+/search/

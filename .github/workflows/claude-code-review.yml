@@ -60,5 +60,5 @@ jobs:
             - 潜在的なバグや問題
             - セキュリティへの影響
             - パフォーマンス上の考慮事項
-          claude_args: "--allowedTools Bash(gh:*) Read Glob Grep"
+          claude_args: "--allowedTools Bash(gh api *) Read Glob Grep"
 

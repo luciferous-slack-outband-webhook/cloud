@@ -37,7 +37,25 @@ jobs:
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           prompt: |
-            このPRをレビューしてください。以下の観点でチェックし、レビューコメントを投稿してください：
+            このPRをレビューしてください。
+
+            ## 前提: 過去のレビューコメントの確認
+            レビューを開始する前に、まず以下のコマンドで過去のレビューコメントとその返信を確認してください：
+
+            1. PRのレビューコメント一覧を取得:
+               gh api repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/comments
+
+            2. PRの一般コメント一覧を取得:
+               gh api repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments
+
+            3. PRのレビュー一覧を取得:
+               gh api repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/reviews
+
+            過去のレビューで指摘された問題が修正されているか確認し、同じ指摘を繰り返さないようにしてください。
+            まだ対応されていない過去の指摘があれば、その旨をコメントに含めてください。
+
+            ## レビュー観点
+            以下の観点でチェックし、レビューコメントを投稿してください：
             - コード品質とベストプラクティス
             - 潜在的なバグや問題
             - セキュリティへの影響

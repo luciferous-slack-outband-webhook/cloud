@@ -220,3 +220,4 @@ cython_debug/
 lambda_deploy_package.zip
 /.claude/
 /search/
+.envrc

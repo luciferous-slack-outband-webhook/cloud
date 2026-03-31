@@ -218,3 +218,6 @@ cython_debug/
 /.idea/
 /tmp/
 lambda_deploy_package.zip
+/.claude/
+/search/
+.envrc

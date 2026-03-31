@@ -59,5 +59,6 @@ jobs:
           TF_VAR_SLACK_INCOMING_WEBHOOK_ERROR_NOTIFIER_01: ${{ secrets.SLACK_INCOMING_WEBHOOK_ERROR_NOTIFIER_01 }}
           TF_VAR_SLACK_SIGNING_SECRET: ${{ secrets.SLACK_SIGNING_SECRET }}
       - name: terraform output
+        if: ${{ github.ref_type == 'branch' }}
         run: terraform output
 

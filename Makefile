@@ -84,6 +84,13 @@ terraform-init:
 		-backend-config="key=$$BACKEND_S3_KEY" \
 		-backend-config="region=$$BACKEND_REGION"
 
+describe:
+	aws ssm get-parameters-by-path \
+		--path "/SlackOutbandWebhook/Cloud/Outputs" \
+		--recursive \
+		--query "Parameters[].{Name:Name,Value:Value}" \
+		--output table
+
 .PHONY: \
 	format \
 	fmt-terraform \
@@ -98,4 +105,5 @@ terraform-init:
 	test-unit \
 	compose-up \
 	compose-down \
-	terraform-init
+	terraform-init \
+	describe
